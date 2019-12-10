@@ -1,0 +1,53 @@
+<!-- This is a static file -->
+<!-- served from your routes in server.js -->
+
+<!-- You might want to try something fancier: -->
+<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
+<!-- pug: https://pugjs.org/ -->
+<!-- haml: http://haml.info/ -->
+<!-- hbs(handlebars): http://handlebarsjs.com/ -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Welcome to Glitch!</title>
+    <meta name="description" content="A cool thing made with Glitch">
+    <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>
+        My first Node.js Discord Bot
+      </h1>
+    </header>
+
+    <main>
+      <p>
+features:<br>
+  - reacts with "NICE" on post containing the word "nice"<br>
+  - 1% chance of reacting with a "thonk" emoji<br>
+        <br>
+command list:<br>
+  ^(your message) to react with your message in emojis, <br>
+  ^^(message) to react on the 2nd message up, ^^^(msg) for 3rd ans so on<br>
+  ^thonk (optional number), e.g "^thonk 4" to react with 4 thonk emojis<br>
+  d6 - roll a d6, works with any number from d2 to d40<br>
+  ask a question by @'ing the bot with it<br>
+        <br>
+Markdown:<br>
+  ++text++ to make the bot resend the message except with emoji letters<br> 
+      </p>
+    </main>
+
+    <!-- Your web-app is https, so your scripts need to be too -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+    <script src="/client.js"></script>
+
+  </body>
+</html>

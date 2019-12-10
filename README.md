@@ -1,27 +1,14 @@
-Welcome to the Glitch BETA
-==========================
+My first Node.js Discord Bot
+features:
+- reacts with "NICE" on post containing the word "nice"
+- 1% chance of reacting with a thinking emoji
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+command list:
+^(your message) to react with your message in emojis,
+^^(message) to react on the 2nd message up, ^^^(msg) for 3rd ans so on
+^thonk (optional number), e.g "^thonk 4" to react with 4 thonk emojis.
+      -You will have to have to have emojis with the "think" or "thonk" in the name, on any server the bot is on
+d6 - roll a d6, works with any number from d2 to d40
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
-
-Find out more [about Glitch](https://glitch.com/about).
-
-
-Your Project
-------------
-
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
-
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
-
-
-Made by [Fog Creek](https://fogcreek.com/)
--------------------
-
-\ ゜o゜)ノ
+Markdown:
+send ++text++ to make the bot resend the message except with emoji letters

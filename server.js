@@ -1,6 +1,28 @@
-//Glitch.com nice discord.js bot
-//https://nice-discordjs-bot.glitch.me/
-//https://uptimerobot.com/dashboard
+//Features to add:
+//intelligent checking if react has been sent (to make react text more reliable)
+//intelligent replacing of chars (eg 11 -> 1I, II->I1)
+//rewrite it in not javascript (Python)
+
+
+//digit substitutes:
+//1-I , 2-Z, 3-E, 4-(A),5-,6-G,7-(T),8-B,9-,0-O
+//you could of course make multiple servers for this bot so it can have more emojis as replacement characters
+
+//50 emojis / server
+//5 sets of 10 digits
+//1.9 sets of letters
+
+
+//server limit per user: 100
+
+//idea2: change the emojis on demand, for the number of letters needed
+
+
+//react limit/message: 10 for users, 40 for bots
+
+
+
+
 
 // server.js
 // where your node app starts
@@ -9,11 +31,6 @@
 const express = require('express');
 const app = express();
 const http = require('http');
-
-
-const deepai = require('deepai'); // OR include deepai.min.js as a script tag in your HTML
-
-deepai.setApiKey(process.env.DEEPAIAPIKEY);
 
 
 app.use(express.static('public'));
@@ -46,6 +63,7 @@ function wrapperReact(message,s){
 	message.react(s);
 }
 
+
 function toFatText(s1){
   //missing: f k r
   var replacements = [["a","🅰","🔼","4⃣"],["b","🅱","8⃣"],["c","↪","©","🌜","☪"],["d","↩","🌛"],["e","3⃣"],["g","6⃣"],["h","♓"],
@@ -59,7 +77,7 @@ function toFatText(s1){
 	var fatText=[];
 	for (var i = 0; i < s.length && fatText.length < 40; i++) { 
     var c = s.charAt(i);  
-    var fatChar=toFatChar(c)
+    var fatChar=toFatChar(c);
     if(!fatText.includes(fatChar)){
       fatText.push(fatChar);
     }else{
@@ -107,6 +125,7 @@ function reactWithText(message,text){
   reactWithEmojiList(message,toFatText(text));
 }
 
+//replace this with regex
 function sanitize(s){
 	//sanitize string to plain ascii
 	var cleanS="";
@@ -119,36 +138,6 @@ function sanitize(s){
 	return cleanS;
 }
 
-//get n random elements from array
-function getRandom(arr, n) {
-    var result = new Array(n),
-        len = arr.length,
-        taken = new Array(len);
-    if (n > len){
-        n = len;
-    }
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
-}
-
-function thonk(lastmessage,nThonks){
-	//get list of custom emojis
-	const emojiList = client.emojis.array();
-	var thonkList=["🤔"];
-	for(var i=0;i<emojiList.length;i++){
-		var nm=emojiList[i].name.toLowerCase();
-		if(nm.includes("thonk") || nm.includes("think")){
-			thonkList.push(emojiList[i]);
-		}
-	}
-	//react with list containing think
-	reactWithEmojiList(lastmessage,getRandom(thonkList,nThonks));
-	//reactWithEmojiList(lastmessage,thonkList); //react with all thonks
-}
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -156,35 +145,7 @@ const client = new Discord.Client();
 client.on("ready", () => {
   console.log("I am ready!");
   client.user.setActivity('nice-discordjs-bot.glitch.me');
-  //client.user.setActivity('nice-discordjs-bot.glitch.me', { type: 'WATCHING' });
 });
-
-var reBigText = /\+\+[^\+]+\+\+/g;
-
-function formatBigText(sIn) {
-  var s = sIn.substring(2,sIn.length-2).toLowerCase();
-  var returnStr="";
-	for(var i=0;i<s.length;i++){
-		var c=s.charAt(i);
-		if("abcdefghijklmonpqrstuvwxyz0123456789!?".includes(c)){
-      
-      
-      if("apob".includes(c)){
-        returnStr+=toFatText(c+c)[1];
-      }else{
-        returnStr+=toFatText(c);
-      }
-			
-      returnStr+=" ";//add sspace after each emoji to stop combining into flags
-		}else if(c==" "){
-      returnStr+="      ";
-    }else{
-      returnStr+=c;
-    }
-	}
-	return returnStr;
-}
-
 
 
 
@@ -211,61 +172,13 @@ client.on("message", (message) => {
 			var command = message.content.slice(1);
 			
       if(command!=""){
-        if(command.startsWith("thonk")){
-          var nThonks = 5;
-          if(command.length>"thonk".length){ //specify number of emojis
-            nThonks = parseInt(command.slice("thonk".length+1));
-          }
-          thonk(lastmessage,nThonks);
-        }else{
-          var s = message.content.substring(1).toLowerCase();
-          reactWithText(lastmessage,s);
-        }
+        var s = message.content.substring(1).toLowerCase();
+        reactWithText(lastmessage,s);
         message.delete();
       }
 		})
 		.catch(console.error);
-  }else if (message.content.startsWith("<@"+client.user.id)) {
-    console.log(message.content);
-    if(message.content.includes("?")){
-      //var replies =  ["It is certain","It is decidedly so","Without a doubt","Yes definitely","You may rely on it","Most likely","Yes","Signs point to yes","Ask again later","My reply is no","My sources say no","Very doubtful"];
-      var replies =  ["yes","no","maybe"];
-      var result = Math.floor(Math.random() * replies.length);
-      //,"As I see it, yes.", "Outlook good.","Reply hazy, try again.","Better not tell you now.","Concentrate and ask again.","Cannot predict now.""Don't count on it.","Outlook not so good.",
-      reactWithText(message,replies[result]);
-    }else{
-      reactWithText(message,"nice");
-    }
-	}else if (message.content.toLowerCase().includes("<dreamify")) {
-    /*var resp = await deepai.callStandardApi("deepdream", {
-        content: "YOUR_IMAGE_URL",
-    });
-    console.log(resp);*/
-  }else if (message.content.toLowerCase().includes("thanos car")) {
-		reactWithText(message,"thanos car");
-	}else if (message.content.toLowerCase().includes("nice")) {
-		reactWithText(message,"nice");
-	}else if(Math.random()<1/100){
-		wrapperReact(message,"🤔");
-	}
+  }
 });
 
 client.login(process.env.TOKEN);
-
-/*
-client.on('messageReactionAdd', (reaction, user) => {
-  console.log(reaction.emoji.name);
-});
-//*/
-
-
-//0x1F1E6 A
-
-//send list of custom emojis
-//const emojiList = message.guild.emojis.map(e=>e.toString()).join(" ");
-//message.channel.send(emojiList);
-
-//https://discordapp.com/oauth2/authorize?client_id=465959927119085569&scope=bot
-
-//BLOCKHEAD
-//DEMONICAL

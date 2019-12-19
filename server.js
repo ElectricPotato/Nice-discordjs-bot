@@ -13,7 +13,12 @@
 //1.9 sets of letters
 
 
-//server limit per user: 100
+//user server limit per user: 100
+//bot created server limit:
+//https://discordapp.com/developers/docs/resources/guild
+//"Create Guild: This endpoint can be used only by bots in less than 10 guilds"
+//1 solution is to manually create more guilds
+//discord does not like bots using user accounts: https://support.discordapp.com/hc/en-us/articles/115002192352-Automated-user-accounts-self-bots-
 
 //idea2: change the emojis on demand, for the number of letters needed
 
